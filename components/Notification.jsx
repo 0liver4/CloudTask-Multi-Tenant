@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
 import { useTaskContext } from "@/context/TaskContext";
+import styles from "@/styles/Notification.module.css";
 
 export default function Notification() {
     const { notification } = useTaskContext();
 
     if (!notification) return null;
 
-    const bgColor = notification.type === "success" ? "bg-green-500" : "bg-red-500";
+    const isSuccess = notification.type === "success";
 
     return (
-        <div className={`fixed top-20 right-4 ${bgColor} text-white px-4 py-3 rounded shadow-lg z-50`}>
+        <div className={`${styles.toast} ${isSuccess ? styles.success : styles.error}`}>
             {notification.message}
         </div>
     );

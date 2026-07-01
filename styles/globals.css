@@ -1,0 +1,46 @@
+:root {
+  --bg-primary: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --bg-badge: #f3f4f6;
+  --text-primary: #111111;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #030712;
+  --bg-sidebar: #111827;
+  --bg-header: #111827;
+  --bg-card: #111827;
+  --bg-badge: #1f2937;
+  --text-primary: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-color: #374151;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

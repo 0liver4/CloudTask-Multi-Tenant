@@ -10,17 +10,13 @@ export function TaskProvider({ children }) {
     const [user, setUser] = useState({
         name: "Oliver",
         role: "admin",
-        teamName: "team-alpha"
     });
 
     //THEME
     const [theme, setTheme] = useState("light");
-// 
+
     //NOTIFICATIONS (TOASTS)
     const [notification, setNotification] = useState(null);
-
-    //TRIGGER REFRESH (preload all tasks)
-    const [refreshKey, setRefreshKey] = useState(0);
 
     //TOGGLE THEME
     const toggleTheme = () => {
@@ -36,11 +32,6 @@ export function TaskProvider({ children }) {
         }, 3000);
     };
 
-    //REFRESH TASKS
-    const refreshTasks = () => {
-        setRefreshKey((prev) => prev + 1);
-    };
-
     return (
         <TaskContext.Provider
             value={{
@@ -50,8 +41,6 @@ export function TaskProvider({ children }) {
                 toggleTheme,
                 notification,
                 showNotification,
-                refreshTasks,
-                refreshKey,
             }}
         >
             {children}
@@ -59,7 +48,7 @@ export function TaskProvider({ children }) {
     );
 }
 
-// 🧠 CUSTOM HOOK
+// CUSTOM HOOK
 export function useTaskContext() {
     return useContext(TaskContext);
 }
