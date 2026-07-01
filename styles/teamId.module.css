@@ -1,0 +1,76 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.summary {
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--bg-badge);
+}
+
+.error {
+  color: #ef4444;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.taskTitle {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: var(--bg-badge);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
