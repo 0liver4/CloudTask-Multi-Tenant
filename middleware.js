@@ -9,19 +9,19 @@ const TEAM_ROUTES = {
 function isUnauthorizedAccess(request, role, teamName) {
     const pathname = request.nextUrl.pathname;
 
-    // Regla 1: /admin es exclusivo de admins
-    if (pathname.startsWith("/admin")) {
-        return role !== "admin";
-    }
+    // ONLY ADMIN CAN ACCESS /admin
+    if (pathname.startsWith("/admin")) return role !== "admin";
 
-    // Regla 2: dashboards de equipo, solo su propio equipo (o admin)
+    //  ONLY ADMIN AND MEMBERS CAN ONLY ACCESS THEIR TEAM'S DASHBOARD TO /dashboard
     if (role === "admin") return false;
 
+    // Check if the request is for a team dashboard route
     const teamId = Object.keys(TEAM_ROUTES).find((id) =>
         pathname.startsWith(TEAM_ROUTES[id])
     );
 
-    if (!teamId) return false; // ruta no protegida por esta regla
+    // ID THERE IS NO TEAM ID IN THE PATH, IT'S AN UNAUTHORIZED ACCESS
+    if (!teamId) return false; 
 
     return teamName !== teamId;
 }

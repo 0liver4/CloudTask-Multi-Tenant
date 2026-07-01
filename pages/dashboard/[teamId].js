@@ -1,7 +1,7 @@
 import TEAM_NAMES from "@/lib/teamsNames";
 import styles from "@/styles/teamId.module.css";
 
-export async function getServerSideProps({ params, req }) {
+export async function getServerSideProps({ params }) {
     const teamId = params?.teamId;
 
     if (!teamId || !TEAM_NAMES[teamId]) {
@@ -11,7 +11,7 @@ export async function getServerSideProps({ params, req }) {
     }
 
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const baseUrl = process.env.NEXT_BASE_URL;
         const response = await fetch(`http://${baseUrl}/api/tasks?teamId=${teamId}`, {
             headers: {
                 "content-type": "application/json",
