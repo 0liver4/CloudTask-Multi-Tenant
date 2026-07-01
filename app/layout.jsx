@@ -303,6 +303,13 @@ function AppLayout({ children }) {
                         Team Gamma
                     </Link>
 
+                    <Link
+                        href="/dashboard/[teamId]"
+                        className="block hover:text-blue-500"
+                    >
+                        Team Alpha
+                    </Link>
+
                 </nav>
 
                 <div className="mt-10 text-sm text-gray-500">

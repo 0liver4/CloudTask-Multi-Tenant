@@ -7,10 +7,11 @@ export async function GET(request) {
 
     const teamId = searchParams.get("teamId");
 
-    let query = supabase.from("tasks").select("*");
-
+    let query
     if (teamId) {
-        query = query.eq("team_id", teamId)
+        query = supabase.from("tasks").select("*").eq("team_id", teamId);
+    } else {
+        query = supabase.from("tasks").select("*")
     }
 
     const { data, error } = await query;
@@ -21,9 +22,7 @@ export async function GET(request) {
             { status: 500 }
         )
     }
-
     return NextResponse.json(data)
-
 }
 
 export async function POST(request) {

@@ -1,54 +1,48 @@
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
+const TEAM_ROUTES = {
+    "team-alpha": "/dashboard/team-alpha",
+    "team-beta": "/dashboard/team-beta",
+    "team-gamma": "/dashboard/team-gamma",
+};
 
-    // MOCK AUTH COOKIE
-    const role = request.cookies.get("user_role")?.value || "member";
-    const teamName = request.cookies.get("user_team")?.value || "member";
+function isUnauthorizedAccess(request, role, teamName) {
+    const pathname = request.nextUrl.pathname;
 
-    const tenantId = role;
-
-    // PROTECT ADMIN ROUTE
-    if (role !== "admin") {
-        if (
-            request.nextUrl.pathname.startsWith("/dashboard/team-alpha") &&
-            teamName !== "team-alpha"
-        ) {
-            return NextResponse.redirect(new URL("/403", request.url));
-        }
-
-        if (
-            request.nextUrl.pathname.startsWith("/dashboard/team-beta") &&
-            teamName !== "team-beta"
-        ) {
-            return NextResponse.redirect(new URL("/403", request.url));
-        }
-
-        if (
-            request.nextUrl.pathname.startsWith("/dashboard/team-gamma") &&
-            teamName !== "team-gamma"
-        ) {
-            return NextResponse.redirect(new URL("/403", request.url));
-        }
-
+    // Regla 1: /admin es exclusivo de admins
+    if (pathname.startsWith("/admin")) {
+        return role !== "admin";
     }
 
-    // CLONE HEADERS
-    const requestHeaders = new Headers(request.headers);
+    // Regla 2: dashboards de equipo, solo su propio equipo (o admin)
+    if (role === "admin") return false;
 
-    // INJECT MULTI-TENANT HEADER
+    const teamId = Object.keys(TEAM_ROUTES).find((id) =>
+        pathname.startsWith(TEAM_ROUTES[id])
+    );
+
+    if (!teamId) return false; // ruta no protegida por esta regla
+
+    return teamName !== teamId;
+}
+
+export function middleware(request) {
+    const role = request.cookies.get("user_role")?.value || "member";
+    const teamName = request.cookies.get("user_team")?.value;
+    const tenantId = role;
+
+    if (isUnauthorizedAccess(request, role, teamName)) {
+        return NextResponse.redirect(new URL("/403", request.url));
+    }
+
+    const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-tenant-id", tenantId);
 
     return NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
+        request: { headers: requestHeaders },
     });
 }
 
 export const config = {
-    matcher: [
-        "/admin/:path*",
-        "/dashboard/:path*",
-    ],
+    matcher: ["/admin/:path*", "/dashboard/:path*"],
 };

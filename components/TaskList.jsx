@@ -1,4 +1,5 @@
 "use client";
+
 import { useTaskContext } from "@/context/TaskContext";
 
 export default function TaskList({ tasks, teamName }) {
@@ -12,9 +13,7 @@ export default function TaskList({ tasks, teamName }) {
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                 {tasks.map((task) => (
-
                     <div key={task.id} className={`border rounded-xl p-4 ${theme === "dark" ? "bg-gray-950 text-gray-100" : "bg-white text-black" }`}>
                         <h2 className="font-bold text-lg">
                             {task.title}
