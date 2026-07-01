@@ -11,9 +11,8 @@ export async function getServerSideProps({ params, req }) {
     }
 
     try {
-        const protocol = req.headers["x-forwarded-proto"] || "http";
-        const host = req.headers.host || "localhost:3000";
-        const response = await fetch(`${protocol}://${host}/api/tasks?teamId=${teamId}`, {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const response = await fetch(`http://${baseUrl}/api/tasks?teamId=${teamId}`, {
             headers: {
                 "content-type": "application/json",
             },
